@@ -1,0 +1,21 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  username: <%= ENV["GEO_API_DATABASE_USERNAME"] || "geouser" %>
+  password: <%= ENV["GEO_API_DATABASE_PASSWORD"] || "secret" %>
+  host: <%= ENV["GEO_API_DATABASE_HOST"] || "127.0.0.1" %>
+  port: <%= ENV["GEO_API_DATABASE_PORT"] || "5432" %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: <%= ENV["GEO_API_DATABASE"] || "geo_api_development" %>
+
+test:
+  <<: *default
+  database: <%= ENV["GEO_API_DATABASE"] || "geo_api_test" %>
+
+production:
+  <<: *default
+  database: GEO_api_production
+  password: <%= ENV["GEO_API_DATABASE_PASSWORD"] %>

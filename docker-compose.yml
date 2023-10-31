@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  geo-api:
+    build: ./geo-api
+    environment:
+      GEO_API_DATABASE_USERNAME: geouser
+      GEO_API_DATABASE_PASSWORD: secret
+      GEO_API_DATABASE_HOST: db
+      GEO_API_DATABASE: geo_api_development
+    volumes:
+      - type: bind
+        source: ./geo-api
+        target: /home/geo-api
+        consistency: delegated
+    ports:
+      - "3000:3000"
+    restart: always
+    depends_on: ["db"]
+    networks:
+      - net
+  db:
+    image: postgres:15.1
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432"
+    environment:
+      POSTGRES_USER: geouser
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: geo_api_development
+    networks:
+      - net
+
+volumes:
+  pgdata:
+
+networks:
+  net:
+    driver: bridge

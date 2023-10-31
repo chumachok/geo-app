@@ -1,0 +1,3 @@
+class GeoLocationSerializer < ApplicationSerializer
+
+end

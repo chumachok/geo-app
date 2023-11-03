@@ -15,8 +15,29 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_31_195041) do
   enable_extension "plpgsql"
 
   create_table "geo_locations", force: :cascade do |t|
+    t.string "continent_code"
+    t.string "continent_name"
+    t.string "country_code"
+    t.string "country_name"
+    t.string "region_code"
+    t.string "region_name"
+    t.string "city"
+    t.string "zip_code"
+    t.decimal "latitude", precision: 10, scale: 6
+    t.decimal "longitude", precision: 10, scale: 6
+    t.bigint "geo_lookup_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["geo_lookup_id"], name: "index_geo_locations_on_geo_lookup_id"
+  end
+
+  create_table "geo_lookups", force: :cascade do |t|
+    t.string "ip"
+    t.string "hostname"
+    t.string "lookup_client"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "geo_locations", "geo_lookups"
 end

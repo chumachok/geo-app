@@ -13,9 +13,9 @@ development:
 
 test:
   <<: *default
-  database: <%= ENV["GEO_API_DATABASE"] || "geo_api_test" %>
+  database: geo_api_test
 
 production:
   <<: *default
-  database: GEO_api_production
+  database: geo_api_production
   password: <%= ENV["GEO_API_DATABASE_PASSWORD"] %>

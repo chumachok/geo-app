@@ -8,11 +8,14 @@ gem "puma", ">= 5.0"
 gem 'jsonapi-serializer', "~> 2.2"
 gem "http", "~> 5.1"
 gem "semantic_logger", "~> 4.13"
-
-gem "tzinfo-data", platforms: %i[ windows jruby ]
+gem "faker", require: false
 
 group :development, :test do
-  gem "debug", platforms: %i[ mri windows ]
+  gem "rspec-rails", "~> 6.0"
+  gem "factory_bot_rails", "~> 6.2"
 end
 
-
+group :test do
+  gem "database_cleaner", "~> 2.0"
+  gem "webmock"
+end

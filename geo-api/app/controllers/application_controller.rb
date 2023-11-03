@@ -47,12 +47,12 @@ class ApplicationController < ActionController::API
   def rescue_standard_error(exception)
     logger.error(message: MSG_INTERNAL_SERVER_ERROR, exception: exception)
 
-    render internal_server_error(message: MSG_INTERNAL_SERVER_ERROR)
+    render internal_server_error
   end
 
   def render_not_found(exception)
     logger.error(message: MSG_NOT_FOUND, exception: exception)
 
-    render not_found(message: MSG_NOT_FOUND)
+    render not_found
   end
 end

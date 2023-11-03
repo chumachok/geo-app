@@ -6,7 +6,7 @@ module GeoApi
       BASE_URL = "http://api.ipstack.com/"
       DEFAULT_TIMEOUT = { connect: 5, write: 5, read: 10 }.freeze
 
-      attr_reader :connection
+      attr_reader :connection, :type
 
       def initialize(access_key:, base_url: BASE_URL, timeout: DEFAULT_TIMEOUT)
         @connection = GeoApi::Utils::HttpWrapper.new(BASE_URL,
@@ -14,6 +14,7 @@ module GeoApi
           timeout: timeout,
         )
         @access_key = access_key
+        @type = GeoLookup::LOOKUP_CLIENT_IPSTACK
       end
 
       def ip_lookup(ip:)
@@ -30,7 +31,7 @@ module GeoApi
 
       def handle_response(res:, caller_m:)
         if res&.status&.success?
-          body = JSON.parse(res.body)
+          body = JSON.parse(res.body, symbolize_names: true)
           if body["success"] == false
             raise StandardError, "#{caller_m} request failed, type: #{body["type"]}, info: #{body["info"]}"
           end

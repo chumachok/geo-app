@@ -4,8 +4,11 @@ Geo app contains implementation of simple api for performing CRUD operations on 
 
 ## Running Unit Tests
 docker compose build
+
 docker-compose up
+
 docker compose exec geo-api bash
+
 RAILS_ENV=test bundle exec rspec
 
 ### testing_data Directory

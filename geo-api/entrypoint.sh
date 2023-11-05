@@ -2,5 +2,6 @@
 set -e
 rm -f /home/geo-api/tmp/pids/server.pid
 
-bundle exec rake db:reset || bundle exec rake db:migrate 2>/dev/null
+# migrate if the database exists, or reset instead
+(bundle exec rake db:migrate:status 2>/dev/null || bundle exec rake db:setup) && bundle exec rake db:migrate
 bundle exec rails s -b 0.0.0.0 -p 3000

@@ -31,6 +31,7 @@ module GeoApi
 
       def handle_response(res:, caller_m:)
         if res&.status&.success?
+          # FIXME: when multiple clients are supported the response should be returned in a consistent format by all clients
           body = JSON.parse(res.body, symbolize_names: true)
           if body["success"] == false
             raise StandardError, "#{caller_m} request failed, type: #{body["type"]}, info: #{body["info"]}"

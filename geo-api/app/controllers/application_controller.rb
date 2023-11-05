@@ -27,7 +27,7 @@ class ApplicationController < ActionController::API
     }
   end
 
-  def not_found(code: INTERNAL_SERVER_ERROR, title: MSG_NOT_FOUND, detail: "")
+  def not_found(code: NOT_FOUND, title: MSG_NOT_FOUND, detail: "")
     {
       json: {
         code: code,
@@ -47,12 +47,13 @@ class ApplicationController < ActionController::API
   def rescue_standard_error(exception)
     logger.error(message: MSG_INTERNAL_SERVER_ERROR, exception: exception)
 
-    render internal_server_error
+    # assumption is the API is not customer facing and it's ok return exception details rather than simply log them
+    render internal_server_error(detail: exception.message)
   end
 
   def render_not_found(exception)
     logger.error(message: MSG_NOT_FOUND, exception: exception)
 
-    render not_found
+    render not_found(detail: exception.message)
   end
 end
